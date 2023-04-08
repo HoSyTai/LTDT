@@ -10,49 +10,44 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
+
+import controller.Controller;
+import model.Graph;
+
 import javax.swing.JTextArea;
 
 public class View extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField textField;
-	private JButton btnUpdate;
-	private JTextField textField_EdgeStart;
-	private JTextField textField_EdgeEnd;
-	private JTextField textField_EdgeAdd;
-	private JButton btnAdd;
-	private JButton btnRemove;
-	private JButton btnCheckLT;
-	private JButton btnEdgeAdd;
-	private JTextArea textArea_console;
-	private JTextArea textArea_mtk;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					View frame = new View();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+//	public Graph model;
+	public JPanel contentPane;
+	public JTextField textField;
+	public JButton btnUpdate;
+	public JTextField textField_EdgeStart;
+	public JTextField textField_EdgeEnd;
+	public JTextField textField_EdgeAdd;
+	public JButton btnAdd;
+	public JButton btnRemove;
+	public JButton btnCheckLT;
+	public JButton btnEdgeAdd;
+	public JTextArea textArea_console;
+	public JTextArea textArea_mtk;
 
 	/**
 	 * Create the frame.
 	 */
 	public View() {
+		
 		setTitle("LTDT_Nhom16_2023");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 700);
+		
+		ActionListener ac = new Controller(this);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(153, 255, 204));
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -77,10 +72,12 @@ public class View extends JFrame {
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		btnUpdate = new JButton("Cập nhập dữ liệu");
+		btnUpdate = new JButton("Up data");
 		btnUpdate.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnUpdate.setBounds(550, 7, 174, 32);
+		
+		btnUpdate.addActionListener(ac);
 		panel.add(btnUpdate);
 		
 		JPanel panel_1 = new JPanel();
@@ -162,4 +159,21 @@ public class View extends JFrame {
 		textArea_mtk.setBounds(562, 320, 300, 313);
 		contentPane.add(textArea_mtk);
 	}
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					View frame = new View();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+
 }
