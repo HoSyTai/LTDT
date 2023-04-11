@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class DirGraph extends Graph {
-
 	public DirGraph(String path) {
 		super(path);
 		// TODO Auto-generated constructor stub
@@ -19,8 +18,9 @@ public class DirGraph extends Graph {
 		// TODO Auto-generated method stub
 		if ((i >= 0 && j >= 0) && (i < numVexs && j < numVexs)) {
 			matrix[i][j]++;
+			setAction_succes(true);
 		} else {
-			System.out.println("dinh khong ton tai");
+			setAction_succes(false);
 		}
 	}
 
@@ -29,11 +29,10 @@ public class DirGraph extends Graph {
 		if ((i >= 0 && j >= 0) && (i < numVexs && j < numVexs)) {
 			if (matrix[i][j] > 0) {
 				matrix[i][j]--;
+				setAction_succes(true);
 			} else {
-				System.out.println("khong co canh de xoa");
+				setAction_succes(false);
 			}
-		} else {
-			System.out.println("nhap dinh khong ton tai");
 		}
 	}
 	@Override
@@ -86,7 +85,6 @@ public class DirGraph extends Graph {
 		dg2.printMatrix();
 		System.out.println(Arrays.toString(dg2.BFS_Trung(0)));
 		System.out.println(dg2.isConnected(dg2.matrix));
-
 		System.out.println(dg2.loadGraph(pathFile2));
 	}
 }
