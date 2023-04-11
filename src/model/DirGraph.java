@@ -85,6 +85,7 @@ public class DirGraph extends Graph {
 		dg2.printMatrix();
 		System.out.println(Arrays.toString(dg2.BFS_Trung(0)));
 		System.out.println(dg2.isConnected(dg2.matrix));
+System.out.println();
 		System.out.println(dg2.loadGraph(pathFile2));
 	}
 }
