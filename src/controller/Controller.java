@@ -22,8 +22,8 @@ public class Controller implements ActionListener{
 
 		String src = e.getActionCommand();
 		if (src.equals(view.btnUpdate.getText())) {
-			view.textField.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
-			String filePath = view.textField.getText();
+//			view.textFieldURl.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
+			String filePath = view.textFieldURl.getText();
 			String mtk = model.loadGraph(filePath);
 			view.textArea_mtk.setText(mtk);
 			view.textArea_mtk.getText();

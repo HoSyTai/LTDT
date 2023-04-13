@@ -1,33 +1,31 @@
 package view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Color;
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 import controller.Controller;
-import model.Graph;
-
-import javax.swing.JTextArea;
-import java.awt.Checkbox;
 
 public class View extends JFrame {
 
 	
 //	public Graph model;
 	public JPanel contentPane;
-	public JTextField textField;
+	public JTextField textFieldURl;
 	public JButton btnUpdate;
 	public JTextField textField_EdgeStart;
 	public JTextField textField_EdgeEnd;
@@ -70,17 +68,30 @@ public class View extends JFrame {
 		lblNewLabel.setBounds(10, 10, 151, 13);
 		panel.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(171, 8, 280, 31);
-		panel.add(textField);
-		textField.setColumns(10);
+		textFieldURl = new JTextField();
+		textFieldURl.setBounds(171, 8, 280, 31);
+		panel.add(textFieldURl);
+		textFieldURl.setColumns(10);
 		
 		btnUpdate = new JButton("Cập nhật dữ liệu");
 		btnUpdate.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnUpdate.setBounds(550, 7, 174, 32);
 		
-		btnUpdate.addActionListener(ac);
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_bt_OpenFile_actionPerformed(e);
+			}
+
+			private void do_bt_OpenFile_actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int status = fileChooser.showOpenDialog(null);
+				if (status == fileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					textFieldURl.setText(file.getAbsolutePath());
+				}}
+			
+		});
 		panel.add(btnUpdate);
 		
 		JPanel panel_1 = new JPanel();
@@ -110,7 +121,7 @@ public class View extends JFrame {
 		textField_EdgeEnd.setBounds(120, 63, 96, 30);
 		panel_1.add(textField_EdgeEnd);
 		
-		btnAdd.addActionListener(ac);
+//		btnAdd.addActionListener(ac);
 		btnAdd = new JButton("Thêm cạnh");
 		btnAdd.setForeground(SystemColor.control);
 		btnAdd.setFont(new Font("Times New Roman", Font.BOLD, 13));
@@ -118,7 +129,7 @@ public class View extends JFrame {
 		btnAdd.setBounds(275, 10, 174, 32);
 		panel_1.add(btnAdd);
 		
-		btnRemove.addActionListener(ac);
+//		btnRemove.addActionListener(ac);
 		btnRemove = new JButton("Xóa cạnh");
 		btnRemove.setForeground(SystemColor.control);
 		btnRemove.setFont(new Font("Times New Roman", Font.BOLD, 13));
@@ -134,7 +145,7 @@ public class View extends JFrame {
 		btnAdd_trongSo.setBounds(275, 94, 174, 32);
 		panel_1.add(btnAdd_trongSo);
 		
-		btnEdgeAdd.addActionListener(ac);
+//		btnEdgeAdd.addActionListener(ac);
 		btnEdgeAdd = new JButton("Thêm đỉnh");
 		btnEdgeAdd.setForeground(SystemColor.control);
 		btnEdgeAdd.setFont(new Font("Times New Roman", Font.BOLD, 13));
