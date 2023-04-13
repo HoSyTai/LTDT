@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.Buffer;
 import java.awt.Color;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
@@ -114,12 +115,16 @@ public class View extends JFrame {
 		btnAdd.setBounds(302, 23, 174, 32);
 		panel_1.add(btnAdd);
 		
+		btnAdd.addActionListener(ac);
+		
 		btnRemove = new JButton("Xóa cạnh");
 		btnRemove.setForeground(SystemColor.control);
 		btnRemove.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnRemove.setBackground(SystemColor.textHighlight);
 		btnRemove.setBounds(302, 74, 174, 32);
 		panel_1.add(btnRemove);
+		
+		btnRemove.addActionListener(ac);
 		
 		btnCheckLT = new JButton("Kiểm tra liên thông");
 		btnCheckLT.setForeground(SystemColor.control);
@@ -134,6 +139,8 @@ public class View extends JFrame {
 		btnEdgeAdd.setBackground(SystemColor.textHighlight);
 		btnEdgeAdd.setBounds(578, 73, 174, 32);
 		panel_1.add(btnEdgeAdd);
+		
+		btnEdgeAdd.addActionListener(ac);
 		
 		JLabel lblEdgeAdd = new JLabel("Đỉnh muốn thêm");
 		lblEdgeAdd.setFont(new Font("Times New Roman", Font.BOLD, 13));
@@ -152,6 +159,8 @@ public class View extends JFrame {
 		textArea_console.setForeground(SystemColor.textText);
 		textArea_console.setBounds(50, 320, 502, 313);
 		contentPane.add(textArea_console);
+		
+		
 		
 		textArea_mtk = new JTextArea();
 		textArea_mtk.setBackground(new Color(255, 255, 255));

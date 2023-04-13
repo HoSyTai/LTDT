@@ -22,7 +22,7 @@ public class Controller implements ActionListener{
 
 		String src = e.getActionCommand();
 		if (src.equals(view.btnUpdate.getText())) {
-			view.textField.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\project\\dothilienthong");
+			view.textField.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
 			String filePath = view.textField.getText();
 			String mtk = model.loadGraph(filePath);
 			view.textArea_mtk.setText(mtk);
@@ -36,7 +36,7 @@ public class Controller implements ActionListener{
 			view.textArea_mtk.getText();
 			view.textArea_console.setText("Them canh thanh cong");
 			view.textArea_console.getText();
-			}else {
+			}else{
 				view.textArea_console.setText("Them canh khong thanh cong");
 				view.textArea_console.getText();
 			}
@@ -53,16 +53,24 @@ public class Controller implements ActionListener{
 					view.textArea_console.setText("Xoa canh khong thanh cong");
 					view.textArea_console.getText();
 				}
-			
+		}else if(src.equals(view.btnEdgeAdd.getText())){
+			model.addVex();
+			view.textArea_mtk.setText(model.printMatrix());
+		    view.textArea_mtk.getText();
+		    
 		}
 	}
 	public static void main(String[] args) {
-		View view = new View(); 
+//		View view = new View(); 
+		Graph model = new DirGraph();
+		model.loadGraph("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
+		model.addVex();
+		System.out.println(model.printMatrix());
 //		Graph model = new DirGraph();
-		Controller c1 = new Controller(view);
-		System.out.println(c1.view.btnUpdate.getText()+"");
-		view.textField.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\project\\dothilienthong");
-		System.out.println();
-		System.out.println(model.loadGraph(view.textField.getText()));
+//		Controller c1 = new Controller(view);
+//		System.out.println(c1.view.btnUpdate.getText()+"");
+//		view.textField.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\project\\dothilienthong");
+//		System.out.println();
+//		System.out.println(model.loadGraph(view.textField.getText()));
 	}
 }

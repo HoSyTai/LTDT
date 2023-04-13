@@ -15,6 +15,17 @@ public abstract class Graph {
 	protected int[][] matrix;
 	protected String path;
 	protected boolean visit[];
+	protected boolean Action_succes = true;
+
+
+
+	public boolean isAction_succes() {
+		return Action_succes;
+	}
+
+	public void setAction_succes(boolean action_succes) {
+		Action_succes = action_succes;
+	}
 
 	public Graph(int numVexs, int[][] matrix) {
 		super();
@@ -30,6 +41,7 @@ public abstract class Graph {
 	}
 
 	public Graph() {
+		this.matrix = new int[numVexs][numVexs];
 
 	}
 
@@ -69,26 +81,45 @@ public abstract class Graph {
 		return rs;
 	}
 
-	public void printMatrix() {
-		// make color
-		System.out.print("    ");
-		for (int i = 0; i < matrix.length; i++) {
-			System.out.print((i + 1) + " ");
-		}
-		System.out.println();
-		System.out.print("    ");
-		for (int i = 0; i < matrix.length; i++) {
-			System.out.print("- ");
-		}
-		System.out.println();
+	public int getNumVexs() {
+		return numVexs;
+	}
+
+	public void setNumVexs(int numVexs) {
+		this.numVexs = numVexs;
+	}
+
+	public int[][] getMatrix() {
+		return matrix;
+	}
+
+	public void setMatrix(int[][] matrix) {
+		this.matrix = matrix;
+	}
+
+	public String printMatrix() {
+		
+		String rs = "";
+//		// make color
+//		System.out.print("    ");
+//		for (int i = 0; i < matrix.length; i++) {
+//			System.out.print((i + 1) + " ");
+//		}
+//		System.out.println();
+//		System.out.print("    ");
+//		for (int i = 0; i < matrix.length; i++) {
+//			System.out.print("- ");
+//		}
+//		System.out.println();
 
 		for (int i = 0; i < matrix.length; i++) {
-			System.out.print((i + 1) + " - ");
+//			System.out.print((i + 1) + " - ");
 			for (int j = 0; j < matrix[0].length; j++) {
-				System.out.print(matrix[i][j] + " ");
+				rs+= (matrix[i][j] + " ");
 			}
-			System.out.println();
+			rs+= "\n";
 		}
+		return rs;
 	}
 
 	public int[] BFS_Trung(int v) {
@@ -135,5 +166,5 @@ public abstract class Graph {
 
 	public abstract void removeEdges(int i, int j);
 
-	public abstract void addVex(int v);
+	public abstract void addVex();
 }
