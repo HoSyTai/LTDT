@@ -1,43 +1,47 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.Buffer;
-import java.awt.Color;
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 import controller.Controller;
-import model.Graph;
-
-import javax.swing.JTextArea;
 
 public class View extends JFrame {
 
 	
 //	public Graph model;
 	public JPanel contentPane;
-	public JTextField textField;
+	public JTextField textFieldURl;
 	public JButton btnUpdate;
 	public JTextField textField_EdgeStart;
 	public JTextField textField_EdgeEnd;
-	public JTextField textField_EdgeAdd;
+	public JTextField textField_NameVex;
 	public JButton btnAdd;
 	public JButton btnRemove;
-	public JButton btnCheckLT;
+	public JButton btnAdd_trongSo;
 	public JButton btnEdgeAdd;
 	public JTextArea textArea_console;
 	public JTextArea textArea_mtk;
+	public JTextField textField_trongSo;
+	public JButton btnDelete_trongSo;
+	public JButton btnCheckLT;
+	public JButton btnDeleteVex;
+	public JButton btn_findTree;
 
 	/**
 	 * Create the frame.
@@ -68,17 +72,30 @@ public class View extends JFrame {
 		lblNewLabel.setBounds(10, 10, 151, 13);
 		panel.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(171, 8, 280, 31);
-		panel.add(textField);
-		textField.setColumns(10);
+		textFieldURl = new JTextField();
+		textFieldURl.setBounds(171, 8, 280, 31);
+		panel.add(textFieldURl);
+		textFieldURl.setColumns(10);
 		
-		btnUpdate = new JButton("Up data");
+		btnUpdate = new JButton("Cập nhật dữ liệu");
 		btnUpdate.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnUpdate.setBounds(550, 7, 174, 32);
 		
-		btnUpdate.addActionListener(ac);
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_bt_OpenFile_actionPerformed(e);
+			}
+
+			private void do_bt_OpenFile_actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int status = fileChooser.showOpenDialog(null);
+				if (status == fileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					textFieldURl.setText(file.getAbsolutePath());
+				}}
+			
+		});
 		panel.add(btnUpdate);
 		
 		JPanel panel_1 = new JPanel();
@@ -90,48 +107,49 @@ public class View extends JFrame {
 		
 		JLabel lblEdgeStrart = new JLabel("Từ đỉnh");
 		lblEdgeStrart.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblEdgeStrart.setBounds(20, 22, 69, 32);
+		lblEdgeStrart.setBounds(20, 10, 69, 32);
 		panel_1.add(lblEdgeStrart);
 		
 		JLabel lblEdgeEnd = new JLabel("Đến đỉnh");
 		lblEdgeEnd.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblEdgeEnd.setBounds(20, 75, 69, 30);
+		lblEdgeEnd.setBounds(20, 62, 69, 30);
 		panel_1.add(lblEdgeEnd);
 		
 		textField_EdgeStart = new JTextField();
-		textField_EdgeStart.setBounds(120, 24, 96, 30);
+		textField_EdgeStart.setBounds(120, 12, 96, 30);
 		panel_1.add(textField_EdgeStart);
 		textField_EdgeStart.setColumns(10);
 		
 		textField_EdgeEnd = new JTextField();
 		textField_EdgeEnd.setColumns(10);
-		textField_EdgeEnd.setBounds(120, 76, 96, 30);
+		textField_EdgeEnd.setBounds(120, 63, 96, 30);
 		panel_1.add(textField_EdgeEnd);
 		
 		btnAdd = new JButton("Thêm cạnh");
 		btnAdd.setForeground(SystemColor.control);
 		btnAdd.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnAdd.setBackground(SystemColor.textHighlight);
-		btnAdd.setBounds(302, 23, 174, 32);
+		btnAdd.setBounds(275, 10, 174, 32);
 		panel_1.add(btnAdd);
-		
 		btnAdd.addActionListener(ac);
-		
+
 		btnRemove = new JButton("Xóa cạnh");
 		btnRemove.setForeground(SystemColor.control);
 		btnRemove.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btnRemove.setBackground(SystemColor.textHighlight);
-		btnRemove.setBounds(302, 74, 174, 32);
+		btnRemove.setBounds(275, 52, 174, 32);
 		panel_1.add(btnRemove);
-		
 		btnRemove.addActionListener(ac);
+
 		
-		btnCheckLT = new JButton("Kiểm tra liên thông");
-		btnCheckLT.setForeground(SystemColor.control);
-		btnCheckLT.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		btnCheckLT.setBackground(SystemColor.textHighlight);
-		btnCheckLT.setBounds(302, 127, 174, 32);
-		panel_1.add(btnCheckLT);
+		btnAdd_trongSo = new JButton("Thêm cạnh có trọng số");
+		btnAdd_trongSo.setForeground(SystemColor.control);
+		btnAdd_trongSo.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btnAdd_trongSo.setBackground(SystemColor.textHighlight);
+		btnAdd_trongSo.setBounds(275, 94, 174, 32);
+		panel_1.add(btnAdd_trongSo);
+		
+		btnAdd_trongSo.addActionListener(ac);
 		
 		btnEdgeAdd = new JButton("Thêm đỉnh");
 		btnEdgeAdd.setForeground(SystemColor.control);
@@ -141,32 +159,94 @@ public class View extends JFrame {
 		panel_1.add(btnEdgeAdd);
 		
 		btnEdgeAdd.addActionListener(ac);
-		
-		JLabel lblEdgeAdd = new JLabel("Đỉnh muốn thêm");
+
+		JLabel lblEdgeAdd = new JLabel("Tên đỉnh");
 		lblEdgeAdd.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		lblEdgeAdd.setBounds(531, 22, 102, 32);
+		lblEdgeAdd.setBounds(483, 10, 102, 32);
 		panel_1.add(lblEdgeAdd);
 		
-		textField_EdgeAdd = new JTextField();
-		textField_EdgeAdd.setColumns(10);
-		textField_EdgeAdd.setBounds(656, 24, 96, 30);
-		panel_1.add(textField_EdgeAdd);
+		textField_NameVex = new JTextField();
+		textField_NameVex.setColumns(10);
+		textField_NameVex.setBounds(624, 12, 96, 30);
+		panel_1.add(textField_NameVex);
+		
+		JLabel lbl_trongSo = new JLabel("Trọng Số");
+		lbl_trongSo.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		lbl_trongSo.setBounds(20, 113, 69, 30);
+		panel_1.add(lbl_trongSo);
+		
+		textField_trongSo = new JTextField();
+		textField_trongSo.setColumns(10);
+		textField_trongSo.setBounds(120, 113, 96, 30);
+		panel_1.add(textField_trongSo);
+		
+		btnDelete_trongSo = new JButton("Xóa cạnh có trọng số");
+		btnDelete_trongSo.setForeground(SystemColor.menu);
+		btnDelete_trongSo.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btnDelete_trongSo.setBackground(SystemColor.textHighlight);
+		btnDelete_trongSo.setBounds(275, 136, 174, 32);
+		panel_1.add(btnDelete_trongSo);
+		
+		btnDelete_trongSo.addActionListener(ac);
+		
+		btnDeleteVex = new JButton("Xóa đỉnh");
+		btnDeleteVex.setForeground(SystemColor.menu);
+		btnDeleteVex.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btnDeleteVex.setBackground(SystemColor.textHighlight);
+		btnDeleteVex.setBounds(578, 118, 174, 32);
+		panel_1.add(btnDeleteVex);
+		btnDeleteVex.addActionListener(ac);
 		
 		textArea_console = new JTextArea();
 		textArea_console.setBackground(new Color(255, 255, 255));
 		textArea_console.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		textArea_console.setLineWrap(true);
 		textArea_console.setForeground(SystemColor.textText);
-		textArea_console.setBounds(50, 320, 502, 313);
+		textArea_console.setBounds(50, 320, 290, 313);
 		contentPane.add(textArea_console);
-		
-		
 		
 		textArea_mtk = new JTextArea();
 		textArea_mtk.setBackground(new Color(255, 255, 255));
 		textArea_mtk.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		textArea_mtk.setBounds(562, 320, 300, 313);
+		textArea_mtk.setBounds(350, 320, 280, 313);
 		contentPane.add(textArea_mtk);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(640, 320, 225, 313);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JLabel lbl_giaiThuat = new JLabel("Các giải thuật");
+		lbl_giaiThuat.setBounds(32, 10, 133, 30);
+		panel_2.add(lbl_giaiThuat);
+		lbl_giaiThuat.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		
+		btnCheckLT = new JButton("Kiểm tra liên thông");
+		btnCheckLT.setForeground(SystemColor.menu);
+		btnCheckLT.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btnCheckLT.setBackground(SystemColor.textHighlight);
+		btnCheckLT.setBounds(10, 77, 205, 32);
+		panel_2.add(btnCheckLT);
+		btnCheckLT.addActionListener(ac);
+		
+		btn_findTree = new JButton("Tìm cây có trọng lượng nhỏ nhất");
+		btn_findTree.setForeground(SystemColor.menu);
+		btn_findTree.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btn_findTree.setBackground(SystemColor.textHighlight);
+		btn_findTree.setBounds(10, 158, 205, 32);
+		panel_2.add(btn_findTree);
+		
+		btn_findTree.addActionListener(ac);
+		
+		JLabel lbl_console = new JLabel("Console");
+		lbl_console.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lbl_console.setBounds(50, 292, 88, 30);
+		contentPane.add(lbl_console);
+		
+		JLabel lbl_mtk = new JLabel("Ma trận kề");
+		lbl_mtk.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lbl_mtk.setBounds(350, 292, 119, 30);
+		contentPane.add(lbl_mtk);
 	}
 	/**
 	 * Launch the application.
@@ -183,6 +263,4 @@ public class View extends JFrame {
 			}
 		});
 	}
-
-
 }

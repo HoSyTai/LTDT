@@ -1,24 +1,26 @@
 package model;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class DirGraph extends Graph {
-//	boolean addedVex = false;
 	public DirGraph(String path) {
 		super(path);
-		// TODO Auto-generated constructor stub
 	}
+
 	public DirGraph() {
-		
 
 	}
 
 	@Override
 	public void addEdges(int i, int j) {
 		// TODO Auto-generated method stub
-		
+
 		if ((i >= 0 && j >= 0) && (i < getNumVexs() && j < getNumVexs())) {
 			getMatrix()[i][j]++;
 			setAction_succes(true);
@@ -28,79 +30,237 @@ public class DirGraph extends Graph {
 	}
 
 	@Override
-	public void removeEdges(int i, int j) {
-		if ((i >= 0 && j >= 0) && (i < getNumVexs() && j < getNumVexs())) {
-			if (getMatrix()[i][j] > 0) {
-				getMatrix()[i][j]--;
+	public void removeEdges(int startVex, int endVex) {
+		if ((startVex >= 0 && endVex >= 0) && (startVex < getNumVexs() && endVex < getNumVexs())) {
+			if (getMatrix()[startVex][endVex] > 0) {
+//				int [][] matrixAfterRemoveEdges = new int [getNumVexs()][getNumVexs()];
+				getMatrix()[startVex][endVex]--;
+//				for (int i = 0; i < getNumVexs(); i++) {
+//					for (int j = 0; j < getNumVexs(); j++) {
+//						matrixAfterRemoveEdges[i][j] = getMatrix()[i][j];
+//					}
+//					}
 				setAction_succes(true);
+//				setMatrix(matrixAfterRemoveEdges);
 			} else {
 				setAction_succes(false);
 			}
 		}
 	}
+
 	@Override
 	public void addVex() {
-		 int [][] matrixAfterAddVex = new int[matrix.length + 1][matrix.length + 1];
+		int[][] matrixAfterAddVex = new int[matrix.length + 1][matrix.length + 1];
 		int lenMatrixAfterAdd = matrixAfterAddVex.length;
-		for (int i = 0; i <lenMatrixAfterAdd; i++) {
+		for (int i = 0; i < lenMatrixAfterAdd; i++) {
 			for (int j = 0; j < lenMatrixAfterAdd; j++) {
-				matrixAfterAddVex[i][j] = ((i<matrix.length) && (j <matrix.length))
-						? matrix[i][j] : 0;
-				
+				matrixAfterAddVex[i][j] = ((i < matrix.length) && (j < matrix.length)) ? matrix[i][j] : 0;
+
 			}
-		}		
+		}
 		setMatrix(matrixAfterAddVex);
 		setNumVexs(lenMatrixAfterAdd);
 	}
-		
-		
-//		for (int i = 0; i < numVexs; i++) {
-//				exitVex = true;
-//		}
-//		if (exitVex == true) {
-//			System.out.println("dinh da ton tai");
-//		} else {
-//			for (int i = 0; i < matrixAfterAddVex.length; i++) {
-//
-//			}
-//			for (int i = 0; i < matrixAfterAddVex.length; i++) {
-//				for (int j = 0; j < matrixAfterAddVex[0].length; j++) {
-//					if (i < matrix.length && j < matrix.length) {
-//						System.out.print(matrix[i][j] + " ");
-//					} else {
-//						System.out.print(matrixAfterAddVex[i][j] + " ");
-//					}
-//				}
-//				System.out.println();
-//			}
-
-//		}
 	
-	public static void main(String[] args) {
-		String pathFile1 = "C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong";
-		Graph dg1 = new DirGraph(pathFile1);
-		System.out.println(dg1.loadGraph(pathFile1));
-		System.out.println(dg1.matrix.length);
-//		System.out.println(dg1.addVex());
-//		System.out.println(dg1.addVex());
-//		dg1.printMatrix();
-//		dg1.removeEdges(1, 2);
-//		dg1.printMatrix();
-//		System.out.println("add vẽx ");
-//		
-//		System.out.println(dg1.addVex());
-//	
-//		
-//		System.out.println(Arrays.toString(dg1.BFS_Trung(0)));
-//		System.out.println(dg1.isConnected(dg1.matrix));
-//		
-//		String pathFile2 = "C:\\Users\\Admin\\eclipse-workspace\\LTDT\\src\\algorithm\\dothilienthong";
-//		Graph dg2 = new DirGraph(pathFile2);
-//		dg2.loadGraph(pathFile2);
-//		dg2.printMatrix();
-//		System.out.println(Arrays.toString(dg2.BFS_Trung(0)));
-//		System.out.println(dg2.isConnected(dg2.matrix));
-//System.out.println();
-//		System.out.println(dg2.loadGraph(pathFile2));
+	@Override
+	public void removeVex(int vex) {
+		int[][] matrixAfterRemoveVex = new int[matrix.length - 1][matrix.length - 1];
+		int len = matrixAfterRemoveVex.length;
+		for (int i = 0; i < len; i++) {
+			for (int j = 0; j < len; j++) {
+			if (i==vex || j == vex) {
+				continue;
+			}else if (i<vex && j< vex) {
+				matrixAfterRemoveVex[i][j] = matrix[i][j];
+			}else if (i>vex && j<vex) {
+				matrixAfterRemoveVex[(i-1)][j] = matrix[i][j];
+			}else if (i>vex && j>vex) {
+				matrixAfterRemoveVex[(i-1)][(j-1)] = matrix[i][j];
+			}else if (i<vex && j>vex) {
+				matrixAfterRemoveVex[i][(j-1)] = matrix[i][j];
+			}
+			}
+		}
+		setMatrix(matrixAfterRemoveVex);
+		setNumVexs(len);
 	}
+		
+
+
+	public boolean checkListEmpty(int[][] matrix) {
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				if (matrix[i][j] != 0) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public int[][] kruskal() {
+		String edgesTree = "";
+		ArrayList<Edges> list = new ArrayList<>();
+		for (int i = 0; i < getNumVexs(); i++) {
+			for (int j = 0; j < getNumVexs(); j++) {
+				if (getMatrix()[i][j] != 0) {
+					Edges c = new Edges(i, j, getMatrix()[i][j]);
+					list.add(c);
+				}
+			}
+		}
+		Collections.sort(list);
+		int[][] tree = new int[getNumVexs()][getNumVexs()];
+		int sum = 0;
+		int[][] E = getMatrix();
+		int socanh = 0;
+		while (socanh < getNumVexs() - 1 && checkListEmpty(E) == false) {
+			for (int i = 0; i < list.size(); i++) {
+				Edges min = list.get(i);
+				if (hasCycles(tree, min.x, min.y) == false) {
+					edgesTree += (min.x + "->" + min.y + " : " + min.w) + "\n";
+					addEdges_hasWei(tree, min.x, min.y, min.w);
+					socanh++;
+					sum += min.w;
+					removeEdges_hasWei(E, min.x, min.y);
+
+				}
+			}
+			System.out.println("Total tree :" + sum);
+		}
+		setEdgesTreeMin(edgesTree);
+		setWeiTreeMin(sum);
+		setMatrix(tree);
+		return tree;
+	}
+
+	public boolean hasCycles(int[][] matrix, int x, int y) {
+		Stack<Integer> stack = new Stack<>();
+		boolean[] visit = new boolean[numVexs];
+		stack.push(x);
+		while (!stack.isEmpty()) {
+			int temp = stack.pop();
+			visit[temp] = true;
+			if (visit[temp] == visit[y]) {
+				return true;
+			} else {
+				for (int i = 0; i < visit.length; i++) {
+					if (matrix[temp][i] != 0 && visit[i] == false) {
+						stack.push(i);
+						visit[i] = true;
+					}
+				}
+			}
+
+		}
+
+		return false;
+	}
+
+	
+	public void removeEdges_hasWei(int[][] matrix, int x, int y) {
+		matrix[x][y] = 0;
+	}
+
+	public void addEdges_hasWei(int[][] matrix, int x, int y, int w) {
+		// TODO Auto-generated method stub
+		matrix[x][y] = w;
+	}
+
+	class Edges implements Comparable<Edges> {
+		int x;
+		int y;
+		int w;
+
+		public Edges(int x, int y, int w) {
+			super();
+			this.x = x;
+			this.y = y;
+			this.w = w;
+		}
+
+		@Override
+		public int compareTo(Edges o) {
+			// TODO Auto-generated method stub
+			return this.w - o.w;
+		}
+	}
+
+	
+	private int[] BFS_Trung(int v) {
+		/*
+		 * y tuong : chi can co canh noi giua 2 dinh bat ki la do thi lien thong ( lien
+		 * thong mot phan
+		 */
+		setVisit(new boolean[getNumVexs()]);;
+		int[][] UnGraph = new int[getNumVexs()][getNumVexs()];
+		DirConvertToUn(UnGraph);
+		Queue<Integer> queue = new LinkedList<>();
+		int[] rs = new int[UnGraph.length];
+		queue.add(v);
+		int index = 0;
+		getVisit()[v] = true;
+		rs[index] = v;
+		while (!queue.isEmpty()) {
+			int start = queue.poll();
+			if (getVisit()[start] == false) {
+				getVisit()[start] = true;
+				rs[++index] = start;
+			}
+			for (int i = 0; i < getNumVexs(); i++) {
+				if (UnGraph[start][i] != 0 && getVisit()[i] == false) {
+					queue.add(i);
+				}
+			}
+		}
+		return rs;
+	}
+
+	public void DirConvertToUn(int [][] matrix) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < getNumVexs(); i++) {
+			for (int j = 0; j < getNumVexs(); j++) {
+				if (getMatrix()[i][j] != 0) {
+					matrix[i][j] = getMatrix()[i][j];
+					matrix[j][i] = getMatrix()[i][j];
+				}
+			}
+		}
+	}
+
+	@Override
+	public boolean isConnected() {
+		BFS_Trung(0);
+		for (int i = 0; i < getNumVexs(); i++) {
+			if (getVisit()[i] == false) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void main(String[] args) {
+
+		Graph dg = new DirGraph("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothikhonglienthong");
+		System.out.println(dg.printMatrix());
+		System.out.println("before convert : \n" + dg.printMatrix());
+		System.out.println("after convert : \n " + dg.printMatrix());
+		System.out.println(dg.isConnected());
+		Graph d = new DirGraph("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
+	}
+
+	@Override
+	public void removeEdges_hasWei(int x, int y) {
+		// TODO Auto-generated method stub
+		getMatrix()[x][y] = 0;
+	}
+
+	@Override
+	public void addEdges_hasWei(int x, int y, int w) {
+		// TODO Auto-generated method stub
+		getMatrix()[x][y] = w;
+	}
+
+	
 }

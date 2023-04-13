@@ -16,8 +16,27 @@ public abstract class Graph {
 	protected String path;
 	protected boolean visit[];
 	protected boolean Action_succes = true;
+	protected int weiTreeMin;
+	protected String edgesTreeMin;
 
 
+
+
+	public String getEdgesTreeMin() {
+		return edgesTreeMin;
+	}
+
+	public void setEdgesTreeMin(String edgesTreeMin) {
+		this.edgesTreeMin = edgesTreeMin;
+	}
+
+	public int getWeiTreeMin() {
+		return weiTreeMin;
+	}
+
+	public void setWeiTreeMin(int weiTreeMin) {
+		this.weiTreeMin = weiTreeMin;
+	}
 
 	public boolean isAction_succes() {
 		return Action_succes;
@@ -38,6 +57,14 @@ public abstract class Graph {
 		this.path = path;
 		loadGraph(path);
 		this.visit = new boolean[numVexs];
+	}
+
+	public void setVisit(boolean[] visit) {
+		this.visit = visit;
+	}
+
+	public boolean[] getVisit() {
+		return visit;
 	}
 
 	public Graph() {
@@ -80,6 +107,16 @@ public abstract class Graph {
 		}
 		return rs;
 	}
+	public String printMatrix() {
+		String rs = "";
+		for (int i = 0; i < getNumVexs(); i++) {
+			for (int j = 0; j < getNumVexs(); j++) {
+				rs+= (getMatrix()[i][j] + " ");
+			}
+			rs+= "\n";
+		}
+		return rs;
+	}
 
 	public int getNumVexs() {
 		return numVexs;
@@ -96,75 +133,20 @@ public abstract class Graph {
 	public void setMatrix(int[][] matrix) {
 		this.matrix = matrix;
 	}
-
-	public String printMatrix() {
+	public abstract boolean isConnected();
 		
-		String rs = "";
-//		// make color
-//		System.out.print("    ");
-//		for (int i = 0; i < matrix.length; i++) {
-//			System.out.print((i + 1) + " ");
-//		}
-//		System.out.println();
-//		System.out.print("    ");
-//		for (int i = 0; i < matrix.length; i++) {
-//			System.out.print("- ");
-//		}
-//		System.out.println();
-
-		for (int i = 0; i < matrix.length; i++) {
-//			System.out.print((i + 1) + " - ");
-			for (int j = 0; j < matrix[0].length; j++) {
-				rs+= (matrix[i][j] + " ");
-			}
-			rs+= "\n";
-		}
-		return rs;
-	}
-
-	public int[] BFS_Trung(int v) {
-		Queue<Integer> queue = new LinkedList<>();
-		int[] rs = new int[matrix.length];
-		queue.add(v);
-		int index = 0;
-		visit[v] = true;
-		rs[index] = v;
-		while (!queue.isEmpty()) {
-			int start = queue.poll();
-			if (visit[start] == false) {
-				visit[start] = true;
-				rs[++index] = start;
-			}
-			for (int i = 0; i < numVexs; i++) {
-				if (matrix[start][i] != 0 && visit[i] == false) {
-					queue.add(i);
-				}
-			}
-		}
-		return rs;
-	}
-
-	public boolean isConnected(int[][] matrix) {
-		int soTPLT = 1;
-		boolean flag = true;
-		BFS_Trung(0);
-		for (int i = 0; i < numVexs; i++) {
-			if (visit[i] == false) {
-				soTPLT++;
-				flag = false;
-			}
-		}
-		if (flag == false) {
-			System.out.println("do thi khong lien thong : " + soTPLT);
-		} else {
-			System.out.println("do thi lien thong : " + soTPLT);
-		}
-		return flag;
-	}
-
 	public abstract void addEdges(int i, int j);
 
 	public abstract void removeEdges(int i, int j);
 
 	public abstract void addVex();
+	
+	public abstract void removeVex(int vex);
+	// kruskal
+	public abstract int[][] kruskal();
+
+     public abstract void removeEdges_hasWei(int x, int y);
+	
+	public abstract void addEdges_hasWei(int x, int y, int w);
+
 }
