@@ -19,58 +19,92 @@ public class Controller implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+	
 		String src = e.getActionCommand();
+		// các chức năng chỉnh sửa dữ liệu đồ thị 
 		if (src.equals(view.btnUpdate.getText())) {
-			view.textField.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
-			String filePath = view.textField.getText();
+			view.textFieldURl.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
+			String filePath = view.textFieldURl.getText();
 			String mtk = model.loadGraph(filePath);
 			view.textArea_mtk.setText(mtk);
 			view.textArea_mtk.getText();
 		}else if(src.equals(view.btnAdd.getText())) {
-			String startVex = view.textField_EdgeStart.getText();
-			String endVex = view.textField_EdgeEnd.getText();
+			int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
+			int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
 			model.addEdges(Integer.valueOf(startVex), Integer.valueOf(endVex));
 			if (model.isAction_succes()) {
 			view.textArea_mtk.setText(model.printMatrix());
 			view.textArea_mtk.getText();
-			view.textArea_console.setText("Them canh thanh cong");
+			view.textArea_console.setText("Thêm cạnh thành công");
 			view.textArea_console.getText();
 			}else{
-				view.textArea_console.setText("Them canh khong thanh cong");
+				view.textArea_console.setText("Thêm cạnh không thành công");
 				view.textArea_console.getText();
 			}
 		}else if(src.equals(view.btnRemove.getText())) {
-			String startVex = view.textField_EdgeStart.getText();
-			String endVex = view.textField_EdgeEnd.getText();
+			int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
+			int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
 			model.removeEdges(Integer.valueOf(startVex), Integer.valueOf(endVex));
 			if (model.isAction_succes()) {
 				view.textArea_mtk.setText(model.printMatrix());
 				view.textArea_mtk.getText();
-				view.textArea_console.setText("Xoa canh thanh cong");
+				view.textArea_console.setText("Xóa cạnh thành công");
 				view.textArea_console.getText();
 				}else {
-					view.textArea_console.setText("Xoa canh khong thanh cong");
+					view.textArea_console.setText("Xóa cạnh không thành công");
 					view.textArea_console.getText();
 				}
 		}else if(src.equals(view.btnEdgeAdd.getText())){
 			model.addVex();
 			view.textArea_mtk.setText(model.printMatrix());
 		    view.textArea_mtk.getText();
-		    
+		    view.textArea_console.setText("Thêm đỉnh thành công");
+		    view.textArea_console.getText();
+		}else if(src.equals(view.btnDeleteVex.getText())){
+			model.removeVex(Integer.valueOf(view.textField_NameVex.getText()));
+			view.textArea_mtk.setText(model.printMatrix());
+		    view.textArea_mtk.getText();
+		    view.textArea_console.setText("Xóa đỉnh thành công");
+		    view.textArea_console.getText();
+		}else if(src.equals(view.btnAdd_trongSo.getText())){
+			int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
+			int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
+			int weiEdges = Integer.parseInt(view.textField_trongSo.getText());
+			model.addEdges_hasWei(startVex, endVex, weiEdges);
+			view.textArea_mtk.setText(model.printMatrix());
+		    view.textArea_mtk.getText();
+		    view.textArea_console.setText("Thêm trọng số thành công");
+		    view.textArea_console.getText();
+		}else if(src.equals(view.btnDelete_trongSo.getText())){
+			int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
+			int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
+			model.removeEdges_hasWei(startVex, endVex);;
+			view.textArea_mtk.setText(model.printMatrix());
+		    view.textArea_mtk.getText();
+		    view.textArea_console.setText("Xóa trọng số thành công");
+		    view.textArea_console.getText();
+		}
+		
+		
+		
+		//các giải thuật
+		else if(src.equals(view.btn_findTree.getText())){
+			model.kruskal();
+			view.textArea_mtk.setText(model.printMatrix());
+		    view.textArea_mtk.getText();
+		    view.textArea_console.setText(model.getEdgesTreeMin()+ model.getWeiTreeMin());
+		    view.textArea_console.getText();
+		}else if (src.equals(view.btnCheckLT.getText())) {
+			boolean isConnect = model.isConnected();
+			if (isConnect==false) {
+				view.textArea_console.setText("Đồ thị không liên thông");
+			}else {
+				view.textArea_console.setText("Đồ thị liên thông");
+			}
+			view.textArea_console.getText();
 		}
 	}
 	public static void main(String[] args) {
-//		View view = new View(); 
-		Graph model = new DirGraph();
-		model.loadGraph("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
-		model.addVex();
-		System.out.println(model.printMatrix());
-//		Graph model = new DirGraph();
-//		Controller c1 = new Controller(view);
-//		System.out.println(c1.view.btnUpdate.getText()+"");
-//		view.textField.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\project\\dothilienthong");
-//		System.out.println();
-//		System.out.println(model.loadGraph(view.textField.getText()));
+
 	}
 }
