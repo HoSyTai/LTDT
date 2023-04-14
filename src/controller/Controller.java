@@ -22,8 +22,7 @@ public class Controller implements ActionListener{
 	
 		String src = e.getActionCommand();
 		// các chức năng chỉnh sửa dữ liệu đồ thị 
-		if (src.equals(view.btnUpdate.getText())) {
-			view.textFieldURl.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
+		if (src.equals(view.btn_updateMTK.getText())) {
 			String filePath = view.textFieldURl.getText();
 			String mtk = model.loadGraph(filePath);
 			view.textArea_mtk.setText(mtk);
