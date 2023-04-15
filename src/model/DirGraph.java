@@ -33,21 +33,14 @@ public class DirGraph extends Graph {
 	public void removeEdges(int startVex, int endVex) {
 		if ((startVex >= 0 && endVex >= 0) && (startVex < getNumVexs() && endVex < getNumVexs())) {
 			if (getMatrix()[startVex][endVex] > 0) {
-//				int [][] matrixAfterRemoveEdges = new int [getNumVexs()][getNumVexs()];
 				getMatrix()[startVex][endVex]--;
-//				for (int i = 0; i < getNumVexs(); i++) {
-//					for (int j = 0; j < getNumVexs(); j++) {
-//						matrixAfterRemoveEdges[i][j] = getMatrix()[i][j];
-//					}
-//					}
 				setAction_succes(true);
-//				setMatrix(matrixAfterRemoveEdges);
 			} else {
 				setAction_succes(false);
 			}
 		}
 	}
-
+// xem lại
 	@Override
 	public void addVex() {
 		int[][] matrixAfterAddVex = new int[matrix.length + 1][matrix.length + 1];
@@ -61,31 +54,36 @@ public class DirGraph extends Graph {
 		setMatrix(matrixAfterAddVex);
 		setNumVexs(lenMatrixAfterAdd);
 	}
-	
+// xem lại
 	@Override
 	public void removeVex(int vex) {
-		int[][] matrixAfterRemoveVex = new int[matrix.length - 1][matrix.length - 1];
+		int[][] matrixAfterRemoveVex = new int[getNumVexs() - 1][getNumVexs() - 1];
 		int len = matrixAfterRemoveVex.length;
 		for (int i = 0; i < len; i++) {
 			for (int j = 0; j < len; j++) {
-			if (i==vex || j == vex) {
-				continue;
-			}else if (i<vex && j< vex) {
-				matrixAfterRemoveVex[i][j] = matrix[i][j];
-			}else if (i>vex && j<vex) {
-				matrixAfterRemoveVex[(i-1)][j] = matrix[i][j];
-			}else if (i>vex && j>vex) {
-				matrixAfterRemoveVex[(i-1)][(j-1)] = matrix[i][j];
-			}else if (i<vex && j>vex) {
-				matrixAfterRemoveVex[i][(j-1)] = matrix[i][j];
-			}
+				if ((vex <= len && vex > -1)) {
+					int decIndex_i = i-1;
+					int decIndex_j = j -1;
+					if (i == vex || j == vex) {
+						continue;
+					} else if (i < vex && j < vex) {
+						matrixAfterRemoveVex[i][j] = getMatrix()[i][j];
+					} else if (i > vex && j < vex) {
+						matrixAfterRemoveVex[decIndex_i][j] = getMatrix()[i][j];
+					} else if (i > vex && j > vex) {
+						matrixAfterRemoveVex[decIndex_i][decIndex_j] = getMatrix()[i][j];
+					} else if (i < vex && j > vex) {
+						matrixAfterRemoveVex[i][decIndex_j] = getMatrix()[i][j];
+					}
+					setAction_succes(true);
+				}else {
+					setAction_succes(false);
+				}
 			}
 		}
 		setMatrix(matrixAfterRemoveVex);
 		setNumVexs(len);
 	}
-		
-
 
 	public boolean checkListEmpty(int[][] matrix) {
 		for (int i = 0; i < matrix.length; i++) {
@@ -98,9 +96,11 @@ public class DirGraph extends Graph {
 		return true;
 	}
 
+	// xem lại
 	@Override
 	public int[][] kruskal() {
 		String edgesTree = "";
+		// danh sách cạnh của đồ thị ===> sắp xếp nó tăng dần theo trọng số
 		ArrayList<Edges> list = new ArrayList<>();
 		for (int i = 0; i < getNumVexs(); i++) {
 			for (int j = 0; j < getNumVexs(); j++) {
@@ -124,10 +124,8 @@ public class DirGraph extends Graph {
 					socanh++;
 					sum += min.w;
 					removeEdges_hasWei(E, min.x, min.y);
-
 				}
 			}
-			System.out.println("Total tree :" + sum);
 		}
 		setEdgesTreeMin(edgesTree);
 		setWeiTreeMin(sum);
@@ -137,7 +135,7 @@ public class DirGraph extends Graph {
 
 	public boolean hasCycles(int[][] matrix, int x, int y) {
 		Stack<Integer> stack = new Stack<>();
-		boolean[] visit = new boolean[numVexs];
+		boolean[] visit = new boolean[getNumVexs()];
 		stack.push(x);
 		while (!stack.isEmpty()) {
 			int temp = stack.pop();
@@ -145,7 +143,7 @@ public class DirGraph extends Graph {
 			if (visit[temp] == visit[y]) {
 				return true;
 			} else {
-				for (int i = 0; i < visit.length; i++) {
+				for (int i = 0; i < matrix.length; i++) {
 					if (matrix[temp][i] != 0 && visit[i] == false) {
 						stack.push(i);
 						visit[i] = true;
@@ -158,7 +156,6 @@ public class DirGraph extends Graph {
 		return false;
 	}
 
-	
 	public void removeEdges_hasWei(int[][] matrix, int x, int y) {
 		matrix[x][y] = 0;
 	}
@@ -187,13 +184,13 @@ public class DirGraph extends Graph {
 		}
 	}
 
-	
 	private int[] BFS_Trung(int v) {
 		/*
 		 * y tuong : chi can co canh noi giua 2 dinh bat ki la do thi lien thong ( lien
 		 * thong mot phan
 		 */
-		setVisit(new boolean[getNumVexs()]);;
+		setVisit(new boolean[getNumVexs()]);
+		;
 		int[][] UnGraph = new int[getNumVexs()][getNumVexs()];
 		DirConvertToUn(UnGraph);
 		Queue<Integer> queue = new LinkedList<>();
@@ -217,7 +214,7 @@ public class DirGraph extends Graph {
 		return rs;
 	}
 
-	public void DirConvertToUn(int [][] matrix) {
+	public void DirConvertToUn(int[][] matrix) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < getNumVexs(); i++) {
 			for (int j = 0; j < getNumVexs(); j++) {
@@ -262,5 +259,4 @@ public class DirGraph extends Graph {
 		getMatrix()[x][y] = w;
 	}
 
-	
 }

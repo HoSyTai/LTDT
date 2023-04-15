@@ -42,6 +42,7 @@ public class View extends JFrame {
 	public JButton btnCheckLT;
 	public JButton btnDeleteVex;
 	public JButton btn_findTree;
+	public JButton btn_updateMTK;
 
 	/**
 	 * Create the frame.
@@ -77,10 +78,10 @@ public class View extends JFrame {
 		panel.add(textFieldURl);
 		textFieldURl.setColumns(10);
 		
-		btnUpdate = new JButton("Cập nhật dữ liệu");
+		btnUpdate = new JButton("Open file");
 		btnUpdate.setBackground(UIManager.getColor("CheckBoxMenuItem.selectionBackground"));
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		btnUpdate.setBounds(550, 7, 174, 32);
+		btnUpdate.setBounds(484, 7, 127, 32);
 		
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,6 +98,14 @@ public class View extends JFrame {
 			
 		});
 		panel.add(btnUpdate);
+		
+		btn_updateMTK = new JButton("Ma trận kề");
+		btn_updateMTK.setForeground(SystemColor.menu);
+		btn_updateMTK.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btn_updateMTK.setBackground(SystemColor.textHighlight);
+		btn_updateMTK.setBounds(621, 7, 133, 32);
+		panel.add(btn_updateMTK);
+		btn_updateMTK.addActionListener(ac);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(153, 255, 255));

@@ -22,8 +22,7 @@ public class Controller implements ActionListener{
 	
 		String src = e.getActionCommand();
 		// các chức năng chỉnh sửa dữ liệu đồ thị 
-		if (src.equals(view.btnUpdate.getText())) {
-			view.textFieldURl.setText("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
+		if (src.equals(view.btn_updateMTK.getText())) {
 			String filePath = view.textFieldURl.getText();
 			String mtk = model.loadGraph(filePath);
 			view.textArea_mtk.setText(mtk);
@@ -62,10 +61,15 @@ public class Controller implements ActionListener{
 		    view.textArea_console.getText();
 		}else if(src.equals(view.btnDeleteVex.getText())){
 			model.removeVex(Integer.valueOf(view.textField_NameVex.getText()));
+			if (model.isAction_succes()) {
 			view.textArea_mtk.setText(model.printMatrix());
 		    view.textArea_mtk.getText();
 		    view.textArea_console.setText("Xóa đỉnh thành công");
 		    view.textArea_console.getText();
+			}else {
+				view.textArea_console.setText("Xóa đỉnh không thành công");
+				view.textArea_console.getText();
+			}
 		}else if(src.equals(view.btnAdd_trongSo.getText())){
 			int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
 			int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
@@ -90,9 +94,7 @@ public class Controller implements ActionListener{
 		//các giải thuật
 		else if(src.equals(view.btn_findTree.getText())){
 			model.kruskal();
-			view.textArea_mtk.setText(model.printMatrix());
-		    view.textArea_mtk.getText();
-		    view.textArea_console.setText(model.getEdgesTreeMin()+ model.getWeiTreeMin());
+		    view.textArea_console.setText(model.getEdgesTreeMin()+ model.getWeiTreeMin()+"\n"+ model.printMatrix());
 		    view.textArea_console.getText();
 		}else if (src.equals(view.btnCheckLT.getText())) {
 			boolean isConnect = model.isConnected();
