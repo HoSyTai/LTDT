@@ -40,30 +40,28 @@ public class DirGraph extends Graph {
 			}
 		}
 	}
-// xem lại
 	@Override
 	public void addVex() {
-		int[][] matrixAfterAddVex = new int[matrix.length + 1][matrix.length + 1];
+		int[][] matrixAfterAddVex = new int[getNumVexs() + 1][getNumVexs() + 1];
 		int lenMatrixAfterAdd = matrixAfterAddVex.length;
 		for (int i = 0; i < lenMatrixAfterAdd; i++) {
 			for (int j = 0; j < lenMatrixAfterAdd; j++) {
-				matrixAfterAddVex[i][j] = ((i < matrix.length) && (j < matrix.length)) ? matrix[i][j] : 0;
+				matrixAfterAddVex[i][j] = ((i < getNumVexs()) && (j < getNumVexs())) ? matrix[i][j] : 0;
 
 			}
 		}
 		setMatrix(matrixAfterAddVex);
 		setNumVexs(lenMatrixAfterAdd);
 	}
-// xem lại
 	@Override
 	public void removeVex(int vex) {
 		int[][] matrixAfterRemoveVex = new int[getNumVexs() - 1][getNumVexs() - 1];
-		int len = matrixAfterRemoveVex.length;
-		for (int i = 0; i < len; i++) {
-			for (int j = 0; j < len; j++) {
-				if ((vex <= len && vex > -1)) {
+		for (int i = 0; i < getNumVexs(); i++) {
+			for (int j = 0; j < getNumVexs(); j++) {
+				if ((vex < getNumVexs() && vex > -1)) {
+					setAction_succes(true);
 					int decIndex_i = i-1;
-					int decIndex_j = j -1;
+					int decIndex_j = j-1;
 					if (i == vex || j == vex) {
 						continue;
 					} else if (i < vex && j < vex) {
@@ -75,14 +73,13 @@ public class DirGraph extends Graph {
 					} else if (i < vex && j > vex) {
 						matrixAfterRemoveVex[i][decIndex_j] = getMatrix()[i][j];
 					}
-					setAction_succes(true);
 				}else {
 					setAction_succes(false);
 				}
 			}
 		}
 		setMatrix(matrixAfterRemoveVex);
-		setNumVexs(len);
+		setNumVexs(matrixAfterRemoveVex.length);
 	}
 
 	public boolean checkListEmpty(int[][] matrix) {
@@ -119,11 +116,11 @@ public class DirGraph extends Graph {
 			for (int i = 0; i < list.size(); i++) {
 				Edges min = list.get(i);
 				if (hasCycles(tree, min.x, min.y) == false) {
-					edgesTree += (min.x + "->" + min.y + " : " + min.w) + "\n";
 					addEdges_hasWei(tree, min.x, min.y, min.w);
 					socanh++;
-					sum += min.w;
+					edgesTree += (min.x + "->" + min.y + " : " + min.w) + "\n";
 					removeEdges_hasWei(E, min.x, min.y);
+					sum += min.w;
 				}
 			}
 		}
@@ -143,7 +140,7 @@ public class DirGraph extends Graph {
 			if (visit[temp] == visit[y]) {
 				return true;
 			} else {
-				for (int i = 0; i < matrix.length; i++) {
+				for (int i = 0; i < visit.length; i++) {
 					if (matrix[temp][i] != 0 && visit[i] == false) {
 						stack.push(i);
 						visit[i] = true;
