@@ -1,9 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -99,8 +97,8 @@ public class DirGraph extends Graph {
 		String edgesTree = "";
 		// danh sách cạnh của đồ thị ===> sắp xếp nó tăng dần theo trọng số
 		ArrayList<Edges> list = new ArrayList<>();
-		for (int i = 0; i < getNumVexs(); i++) {
-			for (int j = 0; j < getNumVexs(); j++) {
+		for (int i = 0; i < getMatrix().length; i++) {
+			for (int j = 0; j < getMatrix().length; j++) {
 				if (getMatrix()[i][j] != 0) {
 					Edges c = new Edges(i, j, getMatrix()[i][j]);
 					list.add(c);
@@ -112,14 +110,14 @@ public class DirGraph extends Graph {
 		int sum = 0;
 		int[][] E = getMatrix();
 		int socanh = 0;
-		while (socanh < getNumVexs() - 1 && checkListEmpty(E) == false) {
+		while (socanh < getNumVexs()-1 && checkListEmpty(E) == false) {
 			for (int i = 0; i < list.size(); i++) {
 				Edges min = list.get(i);
+				removeEdges_hasWei(E, min.x, min.y);
 				if (hasCycles(tree, min.x, min.y) == false) {
 					addEdges_hasWei(tree, min.x, min.y, min.w);
 					socanh++;
 					edgesTree += (min.x + "->" + min.y + " : " + min.w) + "\n";
-					removeEdges_hasWei(E, min.x, min.y);
 					sum += min.w;
 				}
 			}
@@ -132,7 +130,7 @@ public class DirGraph extends Graph {
 
 	public boolean hasCycles(int[][] matrix, int x, int y) {
 		Stack<Integer> stack = new Stack<>();
-		boolean[] visit = new boolean[getNumVexs()];
+		boolean[] visit = new boolean[matrix.length];
 		stack.push(x);
 		while (!stack.isEmpty()) {
 			int temp = stack.pop();
@@ -154,12 +152,27 @@ public class DirGraph extends Graph {
 	}
 
 	public void removeEdges_hasWei(int[][] matrix, int x, int y) {
-		matrix[x][y] = 0;
+		if(x >= 0 && x <= matrix.length && y >= 0 && y <= matrix.length && matrix[x][y] ==1) {
+			if(x==y) {
+				matrix[x][y] = 0;
+			}else {
+				matrix[x][y] = 0;
+				matrix[y][x] = 0;
+			}
+		}
+		
 	}
 
 	public void addEdges_hasWei(int[][] matrix, int x, int y, int w) {
 		// TODO Auto-generated method stub
-		matrix[x][y] = w;
+		if(x >= 0 && x<=numVexs && y >=0 && y<= numVexs) {
+			if(x==y) {
+				matrix[x][y] = w;
+			}else {
+				matrix[x][y] = w;
+				matrix[y][x] = w;
+			}
+		}
 	}
 
 	class Edges implements Comparable<Edges> {
