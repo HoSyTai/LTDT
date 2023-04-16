@@ -94,7 +94,7 @@ public class Controller implements ActionListener{
 		//các giải thuật
 		else if(src.equals(view.btn_findTree.getText())){
 			model.kruskal();
-		    view.textArea_console.setText(model.getEdgesTreeMin()+ model.getWeiTreeMin()+"\n"+ model.printMatrix());
+		    view.textArea_console.setText("Thứ tự duyệt các cạnh: " +"\n"+ model.getEdgesTreeMin()+ "Tổng chi phí cây bao trùm: " + model.getWeiTreeMin()+"\n"+ "Ma trận cây bao trùm: \n" + model.printMatrix());
 		    view.textArea_console.getText();
 		}else if (src.equals(view.btnCheckLT.getText())) {
 			boolean isConnect = model.isConnected();

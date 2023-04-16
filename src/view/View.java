@@ -19,6 +19,9 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 import controller.Controller;
+import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
+import javax.swing.ScrollPaneConstants;
 
 public class View extends JFrame {
 
@@ -42,6 +45,7 @@ public class View extends JFrame {
 	public JButton btnDeleteVex;
 	public JButton btn_findTree;
 	public JButton btn_updateMTK;
+	private JScrollPane scrollPane_mtk;
 
 	/**
 	 * Create the frame.
@@ -216,6 +220,8 @@ public class View extends JFrame {
 		textArea_mtk = new JTextArea();
 		textArea_mtk.setBackground(new Color(255, 255, 255));
 		textArea_mtk.setFont(new Font("Times New Roman", Font.PLAIN, 13));
+		textArea_mtk.setLineWrap(true);
+		textArea_mtk.setForeground(SystemColor.textText);
 		textArea_mtk.setBounds(350, 320, 280, 313);
 		contentPane.add(textArea_mtk);
 		
@@ -255,6 +261,23 @@ public class View extends JFrame {
 		lbl_mtk.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lbl_mtk.setBounds(350, 292, 119, 30);
 		contentPane.add(lbl_mtk);
+		
+		JScrollPane scrollPane_console = new JScrollPane(textArea_console);
+		scrollPane_console.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane_console.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane_console.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_console.setBounds(50, 320, 290, 313);
+		contentPane.add(scrollPane_console);
+		
+		scrollPane_mtk = new JScrollPane(textArea_mtk);
+		scrollPane_mtk.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane_mtk.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_mtk.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane_mtk.setBounds(360, 320, 269, 313);
+		contentPane.add(scrollPane_mtk);
+		
+		
+		
 	}
 	/**
 	 * Launch the application.
