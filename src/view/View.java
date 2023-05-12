@@ -46,6 +46,7 @@ public class View extends JFrame {
 	public JButton btn_findTree;
 	public JButton btn_updateMTK;
 	private JScrollPane scrollPane_mtk;
+	private JButton btnfindMin;
 
 	/**
 	 * Create the frame.
@@ -122,7 +123,7 @@ public class View extends JFrame {
 		lblEdgeStrart.setBounds(20, 10, 69, 32);
 		panel_1.add(lblEdgeStrart);
 		
-		JLabel lblEdgeEnd = new JLabel("Đến đỉnh");
+		JLabel lblEdgeEnd = new JLabel("Đến đỉnh");	
 		lblEdgeEnd.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		lblEdgeEnd.setBounds(20, 62, 69, 30);
 		panel_1.add(lblEdgeEnd);
@@ -249,16 +250,16 @@ public class View extends JFrame {
 		btn_findTree.setBackground(SystemColor.textHighlight);
 		btn_findTree.setBounds(10, 158, 205, 32);
 		panel_2.add(btn_findTree);
-		
-		JButton btn_findMin = new JButton("Đường đi ngắn nhất 2 đỉnh");
-		btn_findMin.setForeground(SystemColor.menu);
-		btn_findMin.setFont(new Font("Times New Roman", Font.BOLD, 13));
-		btn_findMin.setBackground(SystemColor.textHighlight);
-		btn_findMin.setBounds(10, 239, 205, 32);
-		panel_2.add(btn_findMin);
-		
 		btn_findTree.addActionListener(ac);
 		
+		btnfindMin = new JButton("Đường đi ngắn nhất 2 đỉnh");
+		btnfindMin.setForeground(SystemColor.menu);
+		btnfindMin.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btnfindMin.setBackground(SystemColor.textHighlight);
+		btnfindMin.setBounds(10, 239, 205, 32);
+		panel_2.add(btnfindMin);
+		btnfindMin.addActionListener(ac);
+	
 		JLabel lbl_console = new JLabel("Console");
 		lbl_console.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lbl_console.setBounds(50, 292, 88, 30);
