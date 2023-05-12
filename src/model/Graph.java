@@ -148,5 +148,7 @@ public abstract class Graph {
      public abstract void removeEdges_hasWei(int x, int y);
 	
 	public abstract void addEdges_hasWei(int x, int y, int w);
+		
+	public abstract void AlgoDijstraAB(int A, int B);
 
 }
