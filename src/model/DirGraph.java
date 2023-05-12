@@ -268,5 +268,72 @@ public class DirGraph extends Graph {
 		// TODO Auto-generated method stub
 		getMatrix()[x][y] = w;
 	}
+	@Override
+	// chay thuat toan dijstra
+		public void AlgoDijstraAB(int A, int B) {
 
+			if (isConnected() == true) {
+				boolean[] R = new boolean[numVexs];
+				int[] L = new int[numVexs];
+				int[] P = new int[numVexs];
+				for (int i = 0; i < numVexs; i++) {
+					L[i] = Integer.MAX_VALUE;
+					P[i] = -1;
+
+				}
+				for (int i = 0; i < numVexs; i++) {
+					for (int j = 0; j < P.length; j++) {
+						if (matrix[i][j] == 0) {
+							matrix[i][j] = Integer.MAX_VALUE;
+
+						} else {
+							matrix[i][j] = matrix[i][j];
+						}
+					}
+				}
+				// chay thuat toan dijstra
+				L[A] = 0;
+				int sodinhdaduyet = 0;
+				while (sodinhdaduyet < numVexs - 1) {
+					int v = 0;
+					int minValue = Integer.MAX_VALUE;
+					for (int i = 0; i < numVexs; i++) {
+						if (L[i] < minValue && R[i] == false) {
+							minValue = L[i];
+							v = i;
+						}
+					}
+					// tim v > minL[v]
+					for (int i = 0; i < numVexs; i++) {
+						if (L[i] > L[v] + matrix[v][i] && matrix[v][i] < Integer.MAX_VALUE) {
+							L[i] = L[v] + matrix[v][i];
+							P[i] = v;
+						}
+					}
+					R[v] = true;
+					sodinhdaduyet++;
+					if (v == B) {
+						System.out.println("sodinhdaduyet : " + sodinhdaduyet);
+						break;
+					}
+				}
+				print(P, A, B);
+				System.out.println(" " + L[B]);
+			} else {
+				System.out.println("Do thi khong lien thong --- > khong dung dijstra");
+				return;
+			}
+
+		}
+		public void checkConnect() { 
+		} 
+
+		private void print(int[] p, int a, int b) {
+			// TODO Auto-generated method stub
+			System.out.println("duong di ngan nhat tu : "+ a + " den "+ b + " la : ");
+			for (int i = 1; i < p.length; i++) {
+				System.out.print(p[i] + "--->");
+			}
+			System.out.println();
+	}
 }
