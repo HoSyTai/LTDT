@@ -250,6 +250,13 @@ public class View extends JFrame {
 		btn_findTree.setBounds(10, 158, 205, 32);
 		panel_2.add(btn_findTree);
 		
+		JButton btn_findMin = new JButton("Đường đi ngắn nhất 2 đỉnh");
+		btn_findMin.setForeground(SystemColor.menu);
+		btn_findMin.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		btn_findMin.setBackground(SystemColor.textHighlight);
+		btn_findMin.setBounds(10, 239, 205, 32);
+		panel_2.add(btn_findMin);
+		
 		btn_findTree.addActionListener(ac);
 		
 		JLabel lbl_console = new JLabel("Console");
