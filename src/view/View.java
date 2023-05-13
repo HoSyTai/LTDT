@@ -46,7 +46,7 @@ public class View extends JFrame {
 	public JButton btn_findTree;
 	public JButton btn_updateMTK;
 	private JScrollPane scrollPane_mtk;
-	private JButton btnfindMin;
+	public JButton btnfindMin;
 
 	/**
 	 * Create the frame.
@@ -248,7 +248,7 @@ public class View extends JFrame {
 		btn_findTree.setForeground(SystemColor.menu);
 		btn_findTree.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		btn_findTree.setBackground(SystemColor.textHighlight);
-		btn_findTree.setBounds(10, 158, 205, 32);
+		btn_findTree.setBounds(10, 167, 205, 32);
 		panel_2.add(btn_findTree);
 		btn_findTree.addActionListener(ac);
 		
