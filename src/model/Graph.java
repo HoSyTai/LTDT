@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public abstract class Graph {
-	protected int numVexs;
+	public int numVexs;
 	protected int[][] matrix;
 	protected String path;
 	protected boolean visit[];
@@ -107,6 +107,23 @@ public abstract class Graph {
 		}
 		return rs;
 	}
+	public String loadNumVex(String pathFile) {
+		File file = new File(pathFile);
+		String num ="";
+		try {
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			num = br.readLine();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return num;
+	}
+	
 	public String printMatrix() {
 		String rs = "";
 		for (int i = 0; i < getNumVexs(); i++) {

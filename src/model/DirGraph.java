@@ -268,5 +268,11 @@ public class DirGraph extends Graph {
 		// TODO Auto-generated method stub
 		getMatrix()[x][y] = w;
 	}
+
+	@Override
+	public void AlgoDijstraAB(int A, int B) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
