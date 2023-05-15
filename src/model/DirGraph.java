@@ -18,12 +18,15 @@ public class DirGraph extends Graph {
 	@Override
 	public void addEdges(int i, int j) {
 		// TODO Auto-generated method stub
-
-		if ((i >= 0 && j >= 0) && (i < getNumVexs() && j < getNumVexs())) {
-			getMatrix()[i][j]++;
-			setAction_succes(true);
-		} else {
+		if (i == j) {
 			setAction_succes(false);
+		} else {
+			if (i >= 0 && j >= 0 && getMatrix()[i][j] == 1) {
+				setAction_succes(false);
+			} else {
+				getMatrix()[i][j]++;
+				setAction_succes(true);
+			}
 		}
 	}
 
@@ -38,6 +41,7 @@ public class DirGraph extends Graph {
 			}
 		}
 	}
+
 	@Override
 	public void addVex() {
 		int[][] matrixAfterAddVex = new int[getNumVexs() + 1][getNumVexs() + 1];
@@ -51,6 +55,7 @@ public class DirGraph extends Graph {
 		setMatrix(matrixAfterAddVex);
 		setNumVexs(lenMatrixAfterAdd);
 	}
+
 	@Override
 	public void removeVex(int vex) {
 		int[][] matrixAfterRemoveVex = new int[getNumVexs() - 1][getNumVexs() - 1];
@@ -58,8 +63,8 @@ public class DirGraph extends Graph {
 			for (int j = 0; j < getNumVexs(); j++) {
 				if ((vex < getNumVexs() && vex > -1)) {
 					setAction_succes(true);
-					int decIndex_i = i-1;
-					int decIndex_j = j-1;
+					int decIndex_i = i - 1;
+					int decIndex_j = j - 1;
 					if (i == vex || j == vex) {
 						continue;
 					} else if (i < vex && j < vex) {
@@ -71,7 +76,7 @@ public class DirGraph extends Graph {
 					} else if (i < vex && j > vex) {
 						matrixAfterRemoveVex[i][decIndex_j] = getMatrix()[i][j];
 					}
-				}else {
+				} else {
 					setAction_succes(false);
 				}
 			}
@@ -110,7 +115,7 @@ public class DirGraph extends Graph {
 		int sum = 0;
 		int[][] E = getMatrix();
 		int socanh = 0;
-		while (socanh < getNumVexs()-1 && checkListEmpty(E) == false) {
+		while (socanh < getNumVexs() - 1 && checkListEmpty(E) == false) {
 			for (int i = 0; i < list.size(); i++) {
 				Edges min = list.get(i);
 				removeEdges_hasWei(E, min.x, min.y);
@@ -152,23 +157,23 @@ public class DirGraph extends Graph {
 	}
 
 	public void removeEdges_hasWei(int[][] matrix, int x, int y) {
-		if(x >= 0 && x <= matrix.length && y >= 0 && y <= matrix.length && matrix[x][y] ==1) {
-			if(x==y) {
+		if (x >= 0 && x <= matrix.length && y >= 0 && y <= matrix.length && matrix[x][y] == 1) {
+			if (x == y) {
 				matrix[x][y] = 0;
-			}else {
+			} else {
 				matrix[x][y] = 0;
 				matrix[y][x] = 0;
 			}
 		}
-		
+
 	}
 
 	public void addEdges_hasWei(int[][] matrix, int x, int y, int w) {
 		// TODO Auto-generated method stub
-		if(x >= 0 && x<=numVexs && y >=0 && y<= numVexs) {
-			if(x==y) {
+		if (x >= 0 && x <= numVexs && y >= 0 && y <= numVexs) {
+			if (x == y) {
 				matrix[x][y] = w;
-			}else {
+			} else {
 				matrix[x][y] = w;
 				matrix[y][x] = w;
 			}
@@ -272,7 +277,7 @@ public class DirGraph extends Graph {
 	@Override
 	public void AlgoDijstraAB(int A, int B) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }
