@@ -166,6 +166,6 @@ public abstract class Graph {
 	
 	public abstract void addEdges_hasWei(int x, int y, int w);
 		
-	public abstract void AlgoDijstraAB(int A, int B);
+	public abstract void AlgoDijstraAB(int startVex , int endVex);
 
 }
