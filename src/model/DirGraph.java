@@ -275,9 +275,9 @@ public class DirGraph extends Graph {
 	}
 
 	@Override
-	public void AlgoDijstraAB(int A, int B) {
+	public void AlgoDijstraAB(int startVex , int endVex) {
 		// TODO Auto-generated method stub
-
+	
 	}
 
 }
