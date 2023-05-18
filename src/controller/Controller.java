@@ -150,6 +150,18 @@ public class Controller implements ActionListener {
 				}
 				view.textArea_console.getText();
 			}
+			 else if (src.equals(view.btnfindMin.getText())) {
+				int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
+				int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
+				model.AlgoDijstraAB(Integer.valueOf(startVex), Integer.valueOf(endVex));
+				view.textArea_mtk.setText(model.printMatrix());
+				view.textArea_mtk.getText();
+				view.textArea_console.setText("Đường đi ngắn nhất là:"  + "\n" );
+				view.textArea_console.getText();	
+				
+//				String fileName= view.textFieldURL.getText();
+//				save(fileName);
+			}
 		}
 	}
 	
