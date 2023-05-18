@@ -150,14 +150,21 @@ public class Controller implements ActionListener {
 				}
 				view.textArea_console.getText();
 			}
-			 else if (src.equals(view.btnfindMin.getText())) {
-				int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
-				int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
-				model.AlgoDijstraAB(Integer.valueOf(startVex), Integer.valueOf(endVex));
-				view.textArea_mtk.setText(model.printMatrix());
-				view.textArea_mtk.getText();
-				view.textArea_console.setText("Đường đi ngắn nhất là:"  + "\n" );
-				view.textArea_console.getText();	
+			else if (src.equals(view.btnfindMin.getText())) {
+					int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
+					int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
+					model.AlgoDijstraAB(Integer.valueOf(startVex), Integer.valueOf(endVex));
+					view.textArea_mtk.setText(model.printMatrix());
+					view.textArea_mtk.getText();
+					boolean isConnect = model.isConnected();
+					if (isConnect == false) {
+						view.textArea_console.setText("Đồ thị không liên thông, \n" + "->" + "không tìm được đường đi");
+					} else {
+						view.textArea_console.setText("Đường đi ngắn nhất giữa 2 đỉnh là" );
+					}
+					
+				
+					view.textArea_console.getText();	
 				
 //				String fileName= view.textFieldURL.getText();
 //				save(fileName);
