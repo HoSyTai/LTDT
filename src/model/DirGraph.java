@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -18,12 +19,15 @@ public class DirGraph extends Graph {
 	@Override
 	public void addEdges(int i, int j) {
 		// TODO Auto-generated method stub
-
-		if ((i >= 0 && j >= 0) && (i < getNumVexs() && j < getNumVexs())) {
-			getMatrix()[i][j]++;
-			setAction_succes(true);
-		} else {
+		if (i == j) {
 			setAction_succes(false);
+		} else {
+			if (i >= 0 && j >= 0 && getMatrix()[i][j] == 1) {
+				setAction_succes(false);
+			} else {
+				getMatrix()[i][j]++;
+				setAction_succes(true);
+			}
 		}
 	}
 
@@ -38,6 +42,7 @@ public class DirGraph extends Graph {
 			}
 		}
 	}
+
 	@Override
 	public void addVex() {
 		int[][] matrixAfterAddVex = new int[getNumVexs() + 1][getNumVexs() + 1];
@@ -51,6 +56,7 @@ public class DirGraph extends Graph {
 		setMatrix(matrixAfterAddVex);
 		setNumVexs(lenMatrixAfterAdd);
 	}
+
 	@Override
 	public void removeVex(int vex) {
 		int[][] matrixAfterRemoveVex = new int[getNumVexs() - 1][getNumVexs() - 1];
@@ -58,8 +64,8 @@ public class DirGraph extends Graph {
 			for (int j = 0; j < getNumVexs(); j++) {
 				if ((vex < getNumVexs() && vex > -1)) {
 					setAction_succes(true);
-					int decIndex_i = i-1;
-					int decIndex_j = j-1;
+					int decIndex_i = i - 1;
+					int decIndex_j = j - 1;
 					if (i == vex || j == vex) {
 						continue;
 					} else if (i < vex && j < vex) {
@@ -71,7 +77,7 @@ public class DirGraph extends Graph {
 					} else if (i < vex && j > vex) {
 						matrixAfterRemoveVex[i][decIndex_j] = getMatrix()[i][j];
 					}
-				}else {
+				} else {
 					setAction_succes(false);
 				}
 			}
@@ -94,38 +100,44 @@ public class DirGraph extends Graph {
 	// xem lại
 	@Override
 	public int[][] kruskal() {
-		String edgesTree = "";
-		// danh sách cạnh của đồ thị ===> sắp xếp nó tăng dần theo trọng số
-		ArrayList<Edges> list = new ArrayList<>();
-		for (int i = 0; i < getMatrix().length; i++) {
-			for (int j = 0; j < getMatrix().length; j++) {
-				if (getMatrix()[i][j] != 0) {
-					Edges c = new Edges(i, j, getMatrix()[i][j]);
-					list.add(c);
+		if (isConnected()) {
+			// ma trận kề của cây bao trùm nhỏ nhất
+			tree_Min = new int[getNumVexs()][getNumVexs()];
+			String edgesTree = "";
+			// danh sách cạnh của đồ thị ===> sắp xếp nó tăng dần theo trọng số
+			ArrayList<Edges> list = new ArrayList<>();
+			for (int i = 0; i < getMatrix().length; i++) {
+				for (int j = 0; j < getMatrix().length; j++) {
+					if (getMatrix()[i][j] != 0) {
+						Edges c = new Edges(i, j, getMatrix()[i][j]);
+						list.add(c);
+					}
 				}
 			}
-		}
-		Collections.sort(list);
-		int[][] tree = new int[getNumVexs()][getNumVexs()];
-		int sum = 0;
-		int[][] E = getMatrix();
-		int socanh = 0;
-		while (socanh < getNumVexs()-1 && checkListEmpty(E) == false) {
-			for (int i = 0; i < list.size(); i++) {
-				Edges min = list.get(i);
-				removeEdges_hasWei(E, min.x, min.y);
-				if (hasCycles(tree, min.x, min.y) == false) {
-					addEdges_hasWei(tree, min.x, min.y, min.w);
-					socanh++;
-					edgesTree += (min.x + "->" + min.y + " : " + min.w) + "\n";
-					sum += min.w;
+			Collections.sort(list);
+			int[][] tree = new int[getNumVexs()][getNumVexs()];
+			int sum = 0;
+			int[][] E = getMatrix();
+			int socanh = 0;
+			while (socanh < getNumVexs() - 1 && checkListEmpty(E) == false) {
+				for (int i = 0; i < list.size(); i++) {
+					Edges min = list.get(i);
+					removeEdges_hasWei(E, min.x, min.y);
+					if (hasCycles(tree, min.x, min.y) == false) {
+						addEdges_hasWei(tree, min.x, min.y, min.w);
+						socanh++;
+						edgesTree += (min.x + "->" + min.y + " : " + min.w) + "\n";
+						tree_Min[min.x][min.y] = min.w;
+						sum += min.w;
+					}
 				}
 			}
+			setEdgesTreeMin(edgesTree);
+			setWeiTreeMin(sum);
+			setMatrix(tree_Min);
 		}
-		setEdgesTreeMin(edgesTree);
-		setWeiTreeMin(sum);
-		setMatrix(tree);
-		return tree;
+
+		return this.getMatrix();
 	}
 
 	public boolean hasCycles(int[][] matrix, int x, int y) {
@@ -152,23 +164,23 @@ public class DirGraph extends Graph {
 	}
 
 	public void removeEdges_hasWei(int[][] matrix, int x, int y) {
-		if(x >= 0 && x <= matrix.length && y >= 0 && y <= matrix.length && matrix[x][y] ==1) {
-			if(x==y) {
+		if (x >= 0 && x <= matrix.length && y >= 0 && y <= matrix.length && matrix[x][y] == 1) {
+			if (x == y) {
 				matrix[x][y] = 0;
-			}else {
+			} else {
 				matrix[x][y] = 0;
 				matrix[y][x] = 0;
 			}
 		}
-		
+
 	}
 
 	public void addEdges_hasWei(int[][] matrix, int x, int y, int w) {
 		// TODO Auto-generated method stub
-		if(x >= 0 && x<=numVexs && y >=0 && y<= numVexs) {
-			if(x==y) {
+		if (x >= 0 && x <= numVexs && y >= 0 && y <= numVexs) {
+			if (x == y) {
 				matrix[x][y] = w;
-			}else {
+			} else {
 				matrix[x][y] = w;
 				matrix[y][x] = w;
 			}
@@ -249,12 +261,15 @@ public class DirGraph extends Graph {
 
 	public static void main(String[] args) {
 
-		Graph dg = new DirGraph("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothikhonglienthong");
-		System.out.println(dg.printMatrix());
-		System.out.println("before convert : \n" + dg.printMatrix());
-		System.out.println("after convert : \n " + dg.printMatrix());
-		System.out.println(dg.isConnected());
-		Graph d = new DirGraph("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothilienthong");
+//		Graph dg = new DirGraph("C:\\Users\\TUAN\\Desktop\\new workspace\\Demo\\src\\dothikhonglienthong");
+//		System.out.println(dg.printMatrix());
+//		System.out.println("before convert : \n" + dg.printMatrix());
+//		System.out.println("after convert : \n " + dg.printMatrix());
+//		System.out.println(dg.isConnected());
+		Graph d = new DirGraph("C:\\Users\\TUAN\\Desktop\\file test\\kruskal_test");
+		d.AlgoDijstraAB(0, 3);
+		System.out.println(d.getPathMinAB());
+
 	}
 
 	@Override
@@ -269,10 +284,55 @@ public class DirGraph extends Graph {
 		getMatrix()[x][y] = w;
 	}
 
-	@Override
-	public void AlgoDijstraAB(int A, int B) {
-		// TODO Auto-generated method stub
-		
+	private ArrayList<Integer> adjacentVertices(int v) {
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		for (int i = 0; i < getMatrix().length; i++) {
+			if (matrix[v][i] != 0) {
+				res.add(i);
+			}
+		}
+		return res;
 	}
-	
+
+	@Override
+	public void AlgoDijstraAB(int s, int e) {
+		// TODO Auto-generated method stub
+		double[] L = new double[matrix.length];
+		int[] P = new int[matrix.length];
+		List<Integer> R = new ArrayList<>();
+		for (int i = 0; i < matrix.length; i++) {
+			L[i] = Double.POSITIVE_INFINITY;
+			P[i] = -1;
+			R.add(i);
+		}
+		L[s] = 0;
+		while (!R.isEmpty()) {
+			Integer v = R.get(0);
+			for (Integer i : R) {
+				if (L[i] < L[v])
+					v = i;
+			}
+			R.remove(v);
+			for (Integer i : adjacentVertices(v)) {
+				if (L[i] > L[v] + matrix[v][i]) {
+					L[i] = L[v] + matrix[v][i];
+					P[i] = v;
+				}
+			}
+		}
+
+		for (int i = 0; i < matrix.length; i++) {
+			if (i != s && L[i] != Double.POSITIVE_INFINITY) {
+				List<Integer> path = new ArrayList<>();
+				int k = i;
+				while (k != -1) {
+					path.add(0, k);
+					k = P[k];
+				}
+				if (i == e) {
+					pathMinAB = "duong di ngan nhat tu:" + s + " den " + i + ": \n" + path + " co do dai " + L[i];
+				}
+			}
+		}
+	}
 }

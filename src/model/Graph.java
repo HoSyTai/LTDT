@@ -5,7 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.security.interfaces.RSAKey;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public abstract class Graph {
 	public int numVexs;
@@ -15,6 +18,8 @@ public abstract class Graph {
 	protected boolean Action_succes = true;
 	protected int weiTreeMin;
 	protected String edgesTreeMin;
+	protected int[][] tree_Min;
+	protected String pathMinAB;
 
 
 
@@ -25,6 +30,14 @@ public abstract class Graph {
 
 	public void setEdgesTreeMin(String edgesTreeMin) {
 		this.edgesTreeMin = edgesTreeMin;
+	}
+
+	public String getPathMinAB() {
+		return pathMinAB;
+	}
+
+	public void setPathMinAB(String pathMinAB) {
+		this.pathMinAB = pathMinAB;
 	}
 
 	public int getWeiTreeMin() {
@@ -159,10 +172,10 @@ public abstract class Graph {
 	// kruskal
 	public abstract int[][] kruskal();
 
-     public abstract void removeEdges_hasWei(int x, int y);
+    public abstract void removeEdges_hasWei(int x, int y);
 	
 	public abstract void addEdges_hasWei(int x, int y, int w);
 		
-	public abstract void AlgoDijstraAB(int A, int B);
+	public abstract void AlgoDijstraAB(int startVex , int endVex);
 
 }

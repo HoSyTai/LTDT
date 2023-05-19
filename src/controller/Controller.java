@@ -137,10 +137,16 @@ public class Controller implements ActionListener {
 			// các giải thuật
 			else if (src.equals(view.btn_findTree.getText())) {
 				model.kruskal();
+				if (model.isConnected()) {
+					
+				
 				view.textArea_console.setText(
 						"Thứ tự duyệt các cạnh: " + "\n" + model.getEdgesTreeMin() + "Tổng chi phí cây bao trùm: "
 								+ model.getWeiTreeMin() + "\n" + "Ma trận cây bao trùm: \n" + model.printMatrix());
 				view.textArea_console.getText();
+				}else {
+					view.textArea_console.setText("Đồ thị không liên thông, \n" + "->" + "không tìm được đường đi");
+				}
 			} else if (src.equals(view.btnCheckLT.getText())) {
 				boolean isConnect = model.isConnected();
 				if (isConnect == false) {
@@ -149,6 +155,23 @@ public class Controller implements ActionListener {
 					view.textArea_console.setText("Đồ thị liên thông");
 				}
 				view.textArea_console.getText();
+			}
+			else if (src.equals(view.btnfindMin.getText())) {
+					int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
+					int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
+					model.AlgoDijstraAB(startVex, endVex);
+					boolean isConnect = model.isConnected();
+					if (isConnect == false) {
+						view.textArea_console.setText("Đồ thị không liên thông, \n" + "->" + "không tìm được đường đi");
+					} else {
+						view.textArea_console.setText(model.getPathMinAB());
+					}
+					
+				
+					view.textArea_console.getText();	
+				
+//				String fileName= view.textFieldURL.getText();
+//				save(fileName);
 			}
 		}
 	}
@@ -169,8 +192,6 @@ public class Controller implements ActionListener {
 //			e.printStackTrace();
 //		}
 //	}
-	
-	
 	
 	public void save(String fileName) {
 		fileName = view.textFieldURL.getText();
