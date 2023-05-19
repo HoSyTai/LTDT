@@ -159,12 +159,22 @@ public class Controller implements ActionListener {
 			else if (src.equals(view.btnfindMin.getText())) {
 					int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
 					int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
+<<<<<<< HEAD
 					model.AlgoDijstraAB(startVex, endVex);
+=======
+					model.AlgoDijstraAB(Integer.valueOf(startVex), Integer.valueOf(endVex));
+					view.textArea_mtk.setText(model.printMatrix());
+					view.textArea_mtk.getText();
+>>>>>>> 87ec0ba75c1924db97d5df9fcfbd6d379c5153d9
 					boolean isConnect = model.isConnected();
 					if (isConnect == false) {
 						view.textArea_console.setText("Đồ thị không liên thông, \n" + "->" + "không tìm được đường đi");
 					} else {
+<<<<<<< HEAD
 						view.textArea_console.setText(model.getPathMinAB());
+=======
+						view.textArea_console.setText("Đường đi ngắn nhất giữa 2 đỉnh là" );
+>>>>>>> 87ec0ba75c1924db97d5df9fcfbd6d379c5153d9
 					}
 					
 				

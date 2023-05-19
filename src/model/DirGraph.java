@@ -114,6 +114,7 @@ public class DirGraph extends Graph {
 					}
 				}
 			}
+<<<<<<< HEAD
 			Collections.sort(list);
 			int[][] tree = new int[getNumVexs()][getNumVexs()];
 			int sum = 0;
@@ -130,6 +131,23 @@ public class DirGraph extends Graph {
 						tree_Min[min.x][min.y] = min.w;
 						sum += min.w;
 					}
+=======
+		}
+		Collections.sort(list);
+		int[][] tree = new int[getNumVexs()][getNumVexs()];
+		int sum = 0;
+		int[][] E = getMatrix();
+		int socanh = 0;
+		while (socanh < getNumVexs() - 1 && checkListEmpty(E) == false) {
+			for (int i = 0; i < list.size(); i++) {
+				Edges min = list.get(i);
+				removeEdges_hasWei(E, min.x, min.y);
+				if (hasCycles(tree, min.x, min.y) == false) {
+					addEdges_hasWei(tree, min.x, min.y, min.w);
+					socanh++;
+					edgesTree += (min.x + "->" + min.y + " : " + min.w) + "\n";
+					sum += min.w;
+>>>>>>> 87ec0ba75c1924db97d5df9fcfbd6d379c5153d9
 				}
 			}
 			setEdgesTreeMin(edgesTree);
@@ -284,6 +302,7 @@ public class DirGraph extends Graph {
 		getMatrix()[x][y] = w;
 	}
 
+<<<<<<< HEAD
 	private ArrayList<Integer> adjacentVertices(int v) {
 		ArrayList<Integer> res = new ArrayList<Integer>();
 		for (int i = 0; i < getMatrix().length; i++) {
@@ -336,3 +355,12 @@ public class DirGraph extends Graph {
 		}
 	}
 }
+=======
+	@Override
+	public void AlgoDijstraAB(int startVex , int endVex) {
+		// TODO Auto-generated method stub
+	
+	}
+
+}
+>>>>>>> 87ec0ba75c1924db97d5df9fcfbd6d379c5153d9
