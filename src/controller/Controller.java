@@ -2,16 +2,10 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.management.modelmbean.ModelMBean;
 import javax.swing.JFileChooser;
 
 import model.DirGraph;
@@ -45,6 +39,8 @@ public class Controller implements ActionListener {
 			String totalVex = model.loadNumVex(filePath);
 			view.textField_TotalVex.setText(totalVex);
 			view.textField_TotalVex.getText();
+			view.textArea_console.setText("");
+			view.textArea_console.getText();
 		} else {
 			if (src.equals(view.btnOpen.getText())) {
 				int returnVal = fc.showOpenDialog(view);
@@ -159,49 +155,21 @@ public class Controller implements ActionListener {
 			else if (src.equals(view.btnfindMin.getText())) {
 					int startVex = Integer.parseInt(view.textField_EdgeStart.getText());
 					int endVex = Integer.parseInt(view.textField_EdgeEnd.getText());
-<<<<<<< HEAD
 					model.AlgoDijstraAB(startVex, endVex);
-=======
-					model.AlgoDijstraAB(Integer.valueOf(startVex), Integer.valueOf(endVex));
-					view.textArea_mtk.setText(model.printMatrix());
-					view.textArea_mtk.getText();
->>>>>>> 87ec0ba75c1924db97d5df9fcfbd6d379c5153d9
 					boolean isConnect = model.isConnected();
 					if (isConnect == false) {
 						view.textArea_console.setText("Đồ thị không liên thông, \n" + "->" + "không tìm được đường đi");
+						view.textArea_console.getText();
 					} else {
-<<<<<<< HEAD
-						view.textArea_console.setText(model.getPathMinAB());
-=======
-						view.textArea_console.setText("Đường đi ngắn nhất giữa 2 đỉnh là" );
->>>>>>> 87ec0ba75c1924db97d5df9fcfbd6d379c5153d9
+						view.textArea_console.setText(model.getPathMinAB());	
+						view.textArea_console.getText();	
+
 					}
 					
-				
-					view.textArea_console.getText();	
-				
-//				String fileName= view.textFieldURL.getText();
-//				save(fileName);
 			}
 		}
 	}
 	
-	
-	//save file
-//	public void save(String fileName) {
-//		fileName = view.textFieldURL.getText();
-//		String data = view.textArea_mtk.getText();
-//		String numVex = this.model.loadNumVex(fileName);
-//		try {
-//			PrintWriter pw = new PrintWriter(fileName);
-//			pw.print(numVex + "\n");
-//			pw.print(data);
-//			pw.flush();
-//			pw.close();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	public void save(String fileName) {
 		fileName = view.textFieldURL.getText();
