@@ -295,7 +295,7 @@ public class DirGraph extends Graph {
 	}
 
 	@Override
-	public void AlgoDijstraAB(int s, int e) {
+	public void AlgoDijstraAB(int startVex, int endVex) {
 		// TODO Auto-generated method stub
 		double[] L = new double[matrix.length];
 		int[] P = new int[matrix.length];
@@ -305,7 +305,7 @@ public class DirGraph extends Graph {
 			P[i] = -1;
 			R.add(i);
 		}
-		L[s] = 0;
+		L[startVex] = 0;
 		while (!R.isEmpty()) {
 			Integer v = R.get(0);
 			for (Integer i : R) {
@@ -322,15 +322,15 @@ public class DirGraph extends Graph {
 		}
 
 		for (int i = 0; i < matrix.length; i++) {
-			if (i != s && L[i] != Double.POSITIVE_INFINITY) {
+			if (i != startVex && L[i] != Double.POSITIVE_INFINITY) {
 				List<Integer> path = new ArrayList<>();
 				int k = i;
 				while (k != -1) {
 					path.add(0, k);
 					k = P[k];
 				}
-				if (i == e) {
-					pathMinAB = "duong di ngan nhat tu:" + s + " den " + i + ": \n" + path + " co do dai " + L[i];
+				if (i == endVex) {
+					pathMinAB = "duong di ngan nhat tu:" + startVex + " den " + i + ": \n" + path + " co do dai " + L[i];
 				}
 			}
 		}
